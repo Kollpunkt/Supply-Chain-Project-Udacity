@@ -1,6 +1,13 @@
 pragma solidity ^0.4.24;
+
+import "../coffeeaccesscontrol/FarmerRole.sol";
+import "../coffeeaccesscontrol/DistributorRole.sol";
+import "../coffeeaccesscontrol/RetailerRole.sol";
+import "../coffeeaccesscontrol/ConsumerRole.sol";
+
+
 // Define a contract 'Supplychain'
-contract SupplyChain {
+contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole {
 
   // Define 'owner'
   address owner;
@@ -96,43 +103,43 @@ contract SupplyChain {
 
   // Define a modifier that checks if an item.state of a upc is Processed
   modifier processed(uint _upc) {
-
+    require(items[_upc].itemState == State.Processed);
     _;
   }
   
   // Define a modifier that checks if an item.state of a upc is Packed
   modifier packed(uint _upc) {
-
+    require(items[_upc].itemState == State.Packed);
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is ForSale
   modifier forSale(uint _upc) {
-
+    require(items[_upc].itemState == State.ForSale);
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is Sold
   modifier sold(uint _upc) {
-
+    require(items[_upc].itemState == State.Sold);
     _;
   }
   
   // Define a modifier that checks if an item.state of a upc is Shipped
   modifier shipped(uint _upc) {
-
+    require(items[_upc].itemState == State.Shipped);
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is Received
   modifier received(uint _upc) {
-
+    require(items[_upc].itemState == State.Received);
     _;
   }
 
   // Define a modifier that checks if an item.state of a upc is Purchased
   modifier purchased(uint _upc) {
-    
+    require(items[_upc].itemState == State.Purchased);  
     _;
   }
 
@@ -154,6 +161,7 @@ contract SupplyChain {
 
   // Define a function 'harvestItem' that allows a farmer to mark an item 'Harvested'
   function harvestItem(uint _upc, address _originFarmerID, string _originFarmName, string _originFarmInformation, string  _originFarmLatitude, string  _originFarmLongitude, string  _productNotes) public 
+  onlyFarmer
   {
     // Add the new item as part of Harvest
     

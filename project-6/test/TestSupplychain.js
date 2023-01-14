@@ -34,7 +34,7 @@ contract('SupplyChain', function(accounts) {
     ///(8) 0xe07b5ee5f738b2f87f88b99aac9c64ff1e0c7917
     ///(9) 0xbd3ff2e3aded055244d66544c9c059fa0851da44
 
-    console.log("ganache-cli accounts used here...")
+    console.log("ganache accounts used here...")
     console.log("Contract Owner: accounts[0] ", accounts[0])
     console.log("Farmer: accounts[1] ", accounts[1])
     console.log("Distributor: accounts[2] ", accounts[2])
