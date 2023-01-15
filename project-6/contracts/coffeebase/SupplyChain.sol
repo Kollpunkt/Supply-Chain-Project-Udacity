@@ -171,6 +171,7 @@ contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole 
     items[_upc].originFarmLongitude = _originFarmLongitude;
     items[_upc].productNotes = _productNotes;
     items[_upc].ownerID = _originFarmerID;
+    items[_upc].sku = sku;
 
     // Change status to harvested
     items[_upc].itemState = State.Harvested;
