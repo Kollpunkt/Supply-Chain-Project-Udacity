@@ -49,7 +49,7 @@ contract('SupplyChain', function(accounts) {
         // Declare and Initialize a variable for event
         var eventEmitted = false
         
-        // Watch the emitted event Harvested()
+        // Watch the emitted event
         var event = supplyChain.FarmerAdded(accounts[1])
         await event.watch((err, res) => {
             eventEmitted = true
@@ -58,16 +58,17 @@ contract('SupplyChain', function(accounts) {
         //Grant account[1] access as farmer by owner=accounts[0]
         await supplyChain.addFarmer(accounts[1], {from: accounts[0]});
 
-        //Check that the right role was granted with isXXX
-        checkIsFarmer = await supplyChain.isFarmer(accounts[1]);
-        checkIsDistributor = await supplyChain.isDistributor(accounts[1]);
-        checkIsRetailer = await supplyChain.isRetailer(accounts[1]);
-        checkIsConsumer = await supplyChain.isConsumer(accounts[1]);
-        assert.equal(checkIsFarmer, true, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsDistributor, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsRetailer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsConsumer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(eventEmitted, true, 'Invalid event emitted')   
+        //Check that the right role was granted
+        const accountToBeChecked = originFarmerID;
+        checkIsFarmer = await supplyChain.isFarmer(accountToBeChecked);
+        checkIsDistributor = await supplyChain.isDistributor(accountToBeChecked);
+        checkIsRetailer = await supplyChain.isRetailer(accountToBeChecked);
+        checkIsConsumer = await supplyChain.isConsumer(accountToBeChecked);
+        assert.equal(checkIsFarmer, true, 'error: Granting access resulted in invalid isFarmer') 
+        assert.equal(checkIsDistributor, false, 'Error: Granting access resulted in invalid isDistributor') 
+        assert.equal(checkIsRetailer, false, 'Error: Granting access resulted in invalid isRetailer') 
+        assert.equal(checkIsConsumer, false, 'Error: Granting access resulted in invalid isConsumer') 
+        assert.equal(eventEmitted, true, 'Invalid event emitted')    
     })   
 
     // 2nd Test
@@ -79,23 +80,24 @@ contract('SupplyChain', function(accounts) {
         var eventEmitted = false
         
         // Watch the emitted event DistributorAdded()
-        var event = supplyChain.DistributorAdded(accounts[2])
+        var event = supplyChain.DistributorAdded(distributorID)
         await event.watch((err, res) => {
             eventEmitted = true
         })
 
-        //Grant account[1] access as distributor by owner=accounts[0]
-        await supplyChain.addDistributor(accounts[2], {from: accounts[0]});
+        //Grant access as distributor by owner=accounts[0]
+        await supplyChain.addDistributor(distributorID, {from: accounts[0]});
 
-        //Check that the right role was granted 
-        checkIsFarmer = await supplyChain.isFarmer(accounts[2]);
-        checkIsDistributor = await supplyChain.isDistributor(accounts[2]);
-        checkIsRetailer = await supplyChain.isRetailer(accounts[2]);
-        checkIsConsumer = await supplyChain.isConsumer(accounts[2]);
-        assert.equal(checkIsFarmer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsDistributor, true, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsRetailer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsConsumer, false, 'Error: Access to contract as role=farmer could not be granted') 
+        //Check that the right role was granted
+        const accountToBeChecked = distributorID;
+        checkIsFarmer = await supplyChain.isFarmer(accountToBeChecked);
+        checkIsDistributor = await supplyChain.isDistributor(accountToBeChecked);
+        checkIsRetailer = await supplyChain.isRetailer(accountToBeChecked);
+        checkIsConsumer = await supplyChain.isConsumer(accountToBeChecked);
+        assert.equal(checkIsFarmer, false, 'Error: Granting access resulted in invalid isFarmer') 
+        assert.equal(checkIsDistributor, true, 'Error: Granting access resulted in invalid isDistributor') 
+        assert.equal(checkIsRetailer, false, 'Error: Granting access resulted in invalid isRetailer') 
+        assert.equal(checkIsConsumer, false, 'Error: Granting access resulted in invalid isConsumer') 
         assert.equal(eventEmitted, true, 'Invalid event emitted')   
     })    
 
@@ -113,19 +115,20 @@ contract('SupplyChain', function(accounts) {
             eventEmitted = true
         })
 
-        //Grant account[1] access as retailer by owner=accounts[0]
-        await supplyChain.addRetailer(accounts[3], {from: accounts[0]});
+        //Grant access as retailer by owner=accounts[0]
+        await supplyChain.addRetailer(retailerID, {from: accounts[0]});
 
-        //Check that the right role was granted 
-        checkIsFarmer = await supplyChain.isFarmer(accounts[3]);
-        checkIsDistributor = await supplyChain.isDistributor(accounts[3]);
-        checkIsRetailer = await supplyChain.isRetailer(accounts[3]);
-        checkIsConsumer = await supplyChain.isConsumer(accounts[3]);
-        assert.equal(checkIsFarmer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsDistributor, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsRetailer, true, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsConsumer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(eventEmitted, true, 'Invalid event emitted')   
+        //Check that the right role was granted
+        const accountToBeChecked = retailerID;
+        checkIsFarmer = await supplyChain.isFarmer(accountToBeChecked);
+        checkIsDistributor = await supplyChain.isDistributor(accountToBeChecked);
+        checkIsRetailer = await supplyChain.isRetailer(accountToBeChecked);
+        checkIsConsumer = await supplyChain.isConsumer(accountToBeChecked);
+        assert.equal(checkIsFarmer, false, 'Error: Granting access resulted in invalid isFarmer') 
+        assert.equal(checkIsDistributor, false, 'Error: Granting access resulted in invalid isDistributor') 
+        assert.equal(checkIsRetailer, true, 'Error: Granting access resulted in invalid isRetailer') 
+        assert.equal(checkIsConsumer, false, 'Error: Granting access resulted in invalid isConsumer') 
+        assert.equal(eventEmitted, true, 'Invalid event emitted')    
     })    
 
     // 4th Test
@@ -142,19 +145,20 @@ contract('SupplyChain', function(accounts) {
             eventEmitted = true
         })
 
-        //Grant account[1] access as consumer by owner=accounts[0]
+        //Grant access as consumer by owner=accounts[0]
         await supplyChain.addConsumer(accounts[4], {from: accounts[0]});
 
         //Check that the right role was granted
-        checkIsFarmer = await supplyChain.isFarmer(accounts[4]);
-        checkIsDistributor = await supplyChain.isDistributor(accounts[4]);
-        checkIsRetailer = await supplyChain.isRetailer(accounts[4]);
-        checkIsConsumer = await supplyChain.isConsumer(accounts[4]);
-        assert.equal(checkIsFarmer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsDistributor, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsRetailer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsConsumer, true, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(eventEmitted, true, 'Invalid event emitted')   
+        const accountToBeChecked = consumerID;
+        checkIsFarmer = await supplyChain.isFarmer(accountToBeChecked);
+        checkIsDistributor = await supplyChain.isDistributor(accountToBeChecked);
+        checkIsRetailer = await supplyChain.isRetailer(accountToBeChecked);
+        checkIsConsumer = await supplyChain.isConsumer(accountToBeChecked);
+        assert.equal(checkIsFarmer, false, 'Error: Granting access resulted in invalid isFarmer') 
+        assert.equal(checkIsDistributor, false, 'Error: Granting access resulted in invalid isDistributor') 
+        assert.equal(checkIsRetailer, false, 'Error: Granting access resulted in invalid isRetailer') 
+        assert.equal(checkIsConsumer, true, 'Error: Granting access resulted in invalid isConsumer') 
+        assert.equal(eventEmitted, true, 'Invalid event emitted')    
     })    
 
     // 5th Test
@@ -165,13 +169,13 @@ contract('SupplyChain', function(accounts) {
         // Declare and Initialize a variable for event
         var eventEmitted = false
         
-        // Watch the emitted event Harvested()
+        // Watch the emitted event
         var event = supplyChain.DistributorAdded(accounts[5])
         await event.watch((err, res) => {
             eventEmitted = true
         })
 
-        //Grant account[1] access as farmer by not owner => accounts[1]
+        //Grant account[5] access as distributor by adddress that is not owner => accounts[1]
         var transactionPassed = false;        
         supplyChain.addDistributor(accounts[5], {from: accounts[1]})
         .then((err, res) => {
@@ -186,16 +190,17 @@ contract('SupplyChain', function(accounts) {
         //Check that it was reverted 
         assert.equal(transactionPassed, false, 'Granting could take place by non-owner')
 
-        //Check that no role was granted and no event emmitted
-        checkIsFarmer = await supplyChain.isFarmer(accounts[5]);
-        checkIsDistributor = await supplyChain.isDistributor(accounts[5]);
-        checkIsRetailer = await supplyChain.isRetailer(accounts[5]);
-        checkIsConsumer = await supplyChain.isConsumer(accounts[5]);
-        assert.equal(checkIsFarmer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsDistributor, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsRetailer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(checkIsConsumer, false, 'Error: Access to contract as role=farmer could not be granted') 
-        assert.equal(eventEmitted, false, 'Invalid event emitted')   
+        //Check that the right role was granted
+        const accountToBeChecked = accounts[5];
+        checkIsFarmer = await supplyChain.isFarmer(accountToBeChecked);
+        checkIsDistributor = await supplyChain.isDistributor(accountToBeChecked);
+        checkIsRetailer = await supplyChain.isRetailer(accountToBeChecked);
+        checkIsConsumer = await supplyChain.isConsumer(accountToBeChecked);
+        assert.equal(checkIsFarmer, false, 'Error: Granting access resulted in invalid isFarmer') 
+        assert.equal(checkIsDistributor, false, 'Error: Granting access resulted in invalid isDistributor') 
+        assert.equal(checkIsRetailer, false, 'Error: Granting access resulted in invalid isRetailer') 
+        assert.equal(checkIsConsumer, false, 'Error: Granting access resulted in invalid isConsumer') 
+        assert.equal(eventEmitted, false, 'Invalid event emitted')    
     })    
 
     // 6th Test
@@ -213,7 +218,7 @@ contract('SupplyChain', function(accounts) {
         })
 
         // Mark an item as Harvested by calling function harvestItem()
-        await supplyChain.harvestItem(upc, originFarmerID, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes, {from: accounts[1]})
+        await supplyChain.harvestItem(upc, originFarmerID, originFarmName, originFarmInformation, originFarmLatitude, originFarmLongitude, productNotes, productID, {from: accounts[1]})
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
         const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
@@ -228,7 +233,8 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
         assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
         assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
-        assert.equal(resultBufferTwo[5], 0, 'Error: Invalid item State')
+        assert.equal(resultBufferTwo[2], productID, 'Error: Invalid item Product ID')   
+        assert.equal(resultBufferTwo[5], 0, 'Error: Invalid item State') 
         assert.equal(eventEmitted, true, 'Invalid event emitted')        
     })    
 
@@ -246,7 +252,7 @@ contract('SupplyChain', function(accounts) {
         })
         
         // Mark an item as Processed by calling function processtItem()
-        await supplyChain.processItem(upc, {from: accounts[1]});
+        await supplyChain.processItem(upc, {from: originFarmerID});
         
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -266,14 +272,14 @@ contract('SupplyChain', function(accounts) {
         // Declare and Initialize a variable for event
         var eventEmitted = false
         
-        // Watch the emitted event Processed()
+        // Watch the emitted event Packed()
         var event = supplyChain.Packed()
         await event.watch((err, res) => {
             eventEmitted = true
         })
         
         // Mark an item as Processed by calling function processtItem()
-        await supplyChain.packItem(upc, {from: accounts[1]});
+        await supplyChain.packItem(upc, {from: originFarmerID});
         
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -299,7 +305,7 @@ contract('SupplyChain', function(accounts) {
         })
         
         // Mark an item as Processed by calling function processtItem()
-        await supplyChain.sellItem(upc, productPrice, {from: accounts[1]});
+        await supplyChain.sellItem(upc, productPrice, {from: originFarmerID});
         
 
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
@@ -325,7 +331,7 @@ contract('SupplyChain', function(accounts) {
         })
         var beforeAccountBalanceFarmer = await web3.eth.getBalance(originFarmerID);
         var beforeAccountBalanceDistributor = await web3.eth.getBalance(distributorID);
-        // Buy item as reteiler with less than producPrice of 1 ETH
+        // Buy item as distributor with less than product Price of 1 ETH
         const offerPrice = web3.toWei(0.90,"ether");
 
         var transactionPassed = false;        
@@ -361,12 +367,12 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferTwo[6], emptyAddress, 'Error: DistributorID was updated')
          
         // Event should not have been emitted
-        assert.equal(eventEmitted, false, 'Invalid event emitted')      
+        assert.equal(eventEmitted, false, 'Error: Invalid event emitted')      
     
     })    
         
     // 11th Test
-    it("11) Testing smart contract function buyItem() with returning in case of overpaying", async() => {
+    it("11) Testing smart contract function buyItem() with returning overpaid amount", async() => {
         const supplyChain = await SupplyChain.deployed()
         
         // Declare and Initialize a variable for event
@@ -379,7 +385,7 @@ contract('SupplyChain', function(accounts) {
         })
         var beforeAccountBalanceFarmer = await web3.eth.getBalance(originFarmerID);
         var beforeAccountBalanceDistributor = await web3.eth.getBalance(distributorID);
-        // Buy item as reteiler with more than productPrice
+        // Buy item as distributor with more than productPrice
         const offerPrice2 = web3.toWei(1.01,'ether');
 
         var transactionPassed = false;   
@@ -453,13 +459,13 @@ contract('SupplyChain', function(accounts) {
         // Declare and Initialize a variable for event
         var eventEmitted = false
         
-        // Watch the emitted event ForSale()
+        // Watch the emitted event Received()
         var event = supplyChain.Received()
         await event.watch((err, res) => {
             eventEmitted = true
         })
         
-        // Mark an item as Processed by calling function processtItem()
+        // Mark an item as Processed by calling function receiveItem()
         await supplyChain.receiveItem(upc, {from: retailerID});
         
 
@@ -471,7 +477,7 @@ contract('SupplyChain', function(accounts) {
         assert.equal(resultBufferTwo[5], 6, 'Error: Invalid item State') 
         assert.equal(eventEmitted, true, 'Invalid event emitted')
         //retailerID should change 
-        assert.equal(resultBufferTwo[7], retailerID, 'Error: consumerID was not updated correctly')
+        assert.equal(resultBufferTwo[7], retailerID, 'Error: retailerID was not updated correctly')
     })    
 
     // 14th Test
@@ -481,7 +487,7 @@ contract('SupplyChain', function(accounts) {
         // Declare and Initialize a variable for event
         var eventEmitted = false
         
-        // Watch the emitted event Sold()
+        // Watch the emitted event Purchased()
         var event = supplyChain.Purchased()
         await event.watch((err, res) => {
             eventEmitted = true
@@ -490,7 +496,7 @@ contract('SupplyChain', function(accounts) {
         var beforeAccountBalanceRetailer = await web3.eth.getBalance(retailerID);
         var beforeAccountBalanceConsumer = await web3.eth.getBalance(consumerID);
 
-        // Buy item as reteiler with more than productPrice of 1 ETH
+        // Buy item as consumer with more than productPrice of 1 ETH
         const offerPrice2 = web3.toWei(1.01,'ether');
 
         var transactionPassed = false;   
@@ -533,26 +539,44 @@ contract('SupplyChain', function(accounts) {
         
     })    
 
-    // 9th Test
-    it("Testing smart contract function fetchItemBufferOne() that allows anyone to fetch item details from blockchain", async() => {
+    // 15th Test
+    it("15) Testing smart contract function fetchItemBufferOne() that allows anyone to fetch item details from blockchain", async() => {
         const supplyChain = await SupplyChain.deployed()
-
+        
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
-        
-        // Verify the result set:
-        
+        const resultBufferOne = await supplyChain.fetchItemBufferOne.call(upc)
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
+
+        // Verify the result set
+        assert.equal(resultBufferOne[0], sku, 'Error: Invalid item SKU')
+        assert.equal(resultBufferOne[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferOne[2], consumerID, 'Error: Missing or Invalid ownerID')
+        assert.equal(resultBufferOne[3], originFarmerID, 'Error: Missing or Invalid originFarmerID')
+        assert.equal(resultBufferOne[4], originFarmName, 'Error: Missing or Invalid originFarmName')
+        assert.equal(resultBufferOne[5], originFarmInformation, 'Error: Missing or Invalid originFarmInformation')
+        assert.equal(resultBufferOne[6], originFarmLatitude, 'Error: Missing or Invalid originFarmLatitude')
+        assert.equal(resultBufferOne[7], originFarmLongitude, 'Error: Missing or Invalid originFarmLongitude')
     })
 
-    // 10th Test
-    it("Testing smart contract function fetchItemBufferTwo() that allows anyone to fetch item details from blockchain", async() => {
+    // 16th Test
+    it("16) Testing smart contract function fetchItemBufferTwo() that allows anyone to fetch item details from blockchain", async() => {
         const supplyChain = await SupplyChain.deployed()
-
+        
         // Retrieve the just now saved item from blockchain by calling function fetchItem()
-        
-        
-        // Verify the result set:
-        
+        const resultBufferTwo = await supplyChain.fetchItemBufferTwo.call(upc)
+
+        // Verify the result set
+        assert.equal(resultBufferTwo[0], sku, 'Error: Invalid item SKU')
+        assert.equal(resultBufferTwo[1], upc, 'Error: Invalid item UPC')
+        assert.equal(resultBufferTwo[2], productID, 'Error: Invalid item Product ID')        
+        assert.equal(resultBufferTwo[3], productNotes, 'Error: Invalid item Product Notes')    
+        assert.equal(resultBufferTwo[4], productPrice, 'Error: Invalid item Product Price')
+        assert.equal(resultBufferTwo[5], 7, 'Error: Invalid Item State')        
+        assert.equal(resultBufferTwo[6], distributorID, 'Error: Invalid Distributor ID')
+        assert.equal(resultBufferTwo[7], retailerID, 'Error: Invalid Retailer Id')
+        assert.equal(resultBufferTwo[8], consumerID, 'Error: Invalid Consumer ID') 
+    
+    
     })
 
 });
