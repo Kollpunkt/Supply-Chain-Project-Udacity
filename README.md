@@ -22,6 +22,10 @@ The DApp User Interface when running looks like...
 ## UML - State Diagram
 ![truffle test](images/UML-State.png)
 
+## UML - Class Diagram
+![truffle test](images/UML-Class.png)
+
+
 ## Requirement 2: Libraries / versions
 Truffle v4.1.14
 Solidity v0.4.24
