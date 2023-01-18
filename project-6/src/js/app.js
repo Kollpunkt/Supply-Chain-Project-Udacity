@@ -113,6 +113,10 @@ App = {
             App.fetchItemBufferTwo();
             App.fetchEvents();
 
+            web3.eth.defaultAccount = web3.eth.accounts[0];
+            //personal.unlockAccount(web3.eth.defaultAccount);
+            console.log(web3.eth.defaultAccount);
+
         });
 
         return App.bindEvents();
@@ -279,7 +283,8 @@ App = {
         var processId = parseInt($(event.target).data('id'));
 
         App.contracts.SupplyChain.deployed().then(function(instance) {
-            return instance.purchaseItem(App.upc, {from: App.metamaskAccountID});
+            const walletValue = web3.toWei(2000000, "gwei");
+            return instance.purchaseItem(App.upc, {from: App.metamaskAccountID, value: walletValue});
         }).then(function(result) {
             $("#ftc-item").text(result);
             console.log('purchaseItem',result);

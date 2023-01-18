@@ -12,8 +12,25 @@ The DApp User Interface when running should look like...
 
 ![truffle test](images/ftc_transaction_history.png)
 
+## Requirement 1 UML
+### UML - Activity Diagram
 
-## Getting Started
+## UML - Sequence Diagram
+
+## UML - State Diagram
+
+## Requirement 2: Libraries / versions
+Truffle: 
+Solidity
+Node
+web3: 0.20.6
+hd-wallet
+
+## Test successful
+
+## Contract deployment to Goerli
+
+
 
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 

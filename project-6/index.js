@@ -27,6 +27,8 @@ const App = {
       // get accounts
       const accounts = await web3.eth.getAccounts();
       this.account = accounts[0];
+      // web3.eth.defaultAccount = web3.eth.accounts[0];
+      // console.log(this.account);
     } catch (error) {
       console.error("Could not connect to contract or chain.");
     }
