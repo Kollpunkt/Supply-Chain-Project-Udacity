@@ -1,5 +1,6 @@
 pragma solidity ^0.4.24;
 
+import "../coffeecore/Ownable.sol";
 import "../coffeeaccesscontrol/FarmerRole.sol";
 import "../coffeeaccesscontrol/DistributorRole.sol";
 import "../coffeeaccesscontrol/RetailerRole.sol";
@@ -7,10 +8,10 @@ import "../coffeeaccesscontrol/ConsumerRole.sol";
 
 
 // Define a contract 'Supplychain'
-contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole {
+contract SupplyChain is Ownable, FarmerRole, DistributorRole, RetailerRole, ConsumerRole {
 
   // Define 'owner'
-  address owner;
+  // address owner; No longer needed as Ownable is inherited
 
   // Define a variable called 'upc' for Universal Product Code (UPC)
   uint  upc;
@@ -69,11 +70,13 @@ contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole 
   event Received(uint upc);
   event Purchased(uint upc);
 
+
   // Define a modifer that checks to see if msg.sender == owner of the contract
-  modifier onlyOwner() {
-    require(msg.sender == owner);
-    _;
-  }
+  // No longer required as modifier is inherited from Ownable
+  // modifier onlyOwner() {
+  //   require(msg.sender == owner());
+  //   _;
+  // }
 
   // Define a modifer that verifies the Caller
   modifier verifyCaller (address _address) {
@@ -147,15 +150,16 @@ contract SupplyChain is FarmerRole, DistributorRole, RetailerRole, ConsumerRole 
   // and set 'sku' to 1
   // and set 'upc' to 1
   constructor() public payable {
-    owner = msg.sender;
+    //owner = msg.sender;  not required as part of constructor of FarmerRole and Ownable
     sku = 1;
     upc = 1;
   }
 
   // Define a function 'kill' if required
+  // changed owner variable to owner() function
   function kill() public {
-    if (msg.sender == owner) {
-      selfdestruct(owner);
+    if (msg.sender == owner()) {
+      selfdestruct(owner());
     }
   }
 

@@ -13,6 +13,7 @@ App = {
     originFarmLongitude: null,
     productNotes: null,
     productPrice: 0,
+    productID: 0,
     distributorID: "0x0000000000000000000000000000000000000000",
     retailerID: "0x0000000000000000000000000000000000000000",
     consumerID: "0x0000000000000000000000000000000000000000",
@@ -175,7 +176,8 @@ App = {
                 App.originFarmInformation, 
                 App.originFarmLatitude, 
                 App.originFarmLongitude, 
-                App.productNotes
+                App.productNotes,   
+                App.productID
             );
         }).then(function(result) {
             $("#ftc-item").text(result);
