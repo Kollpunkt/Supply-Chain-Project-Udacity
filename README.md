@@ -41,5 +41,9 @@ tsc: had some trouble and thought I can solve it with setting compiler options
 ## Contract deployment to Goerli
 https://goerli.etherscan.io/tx/0xc22e941704d616908649057dc0213aed0eb657a339538cdfba10c3e8dd266f1f
 
+Contract address: 0x0a0d6991eb1a020ffa569dc18ee99b3edfa4154b
+https://goerli.etherscan.io/address/0x0a0d6991eb1a020ffa569dc18ee99b3edfa4154b
+
+
 ![truffle test](images/Migration-goerli.png)
 
